@@ -1,0 +1,36 @@
+# anf-skills holds itself to its own bar: the scripts parse, the guards behave on every
+# path (tests/run.sh installs them into a throwaway repository and asserts each case), the
+# repository passes its own secret scan, and the skill keeps its shape. Fails closed.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Shell scripts parse, and shellcheck has no complaints it can prove
+        run: |
+          for f in install/hooks/secret-scan.sh install/hooks/pre-commit install/claude/ship-gate.sh tests/run.sh; do sh -n "$f"; done
+          shellcheck --version
+          shellcheck -s sh -S warning install/hooks/secret-scan.sh install/hooks/pre-commit install/claude/ship-gate.sh tests/run.sh
+
+      - name: The guards behave on every path
+        run: sh tests/run.sh
+
+      - name: This repository passes its own secret scan
+        run: sh install/hooks/secret-scan.sh --tree
+
+      - name: The gate template is valid YAML
+        run: python3 -c 'import yaml,sys; yaml.safe_load(open("install/ci/gate.yml")); print("gate.yml parses")'
