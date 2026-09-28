@@ -1,0 +1,21 @@
+#!/bin/sh
+# vibe-safe pre-commit hook: no secret gets committed by accident.
+# Installed by anf-skills (install/INSTALL.md); runs scripts/secret-scan.sh on what is staged.
+# Bypass once: ANF_ALLOW_SECRET=1 git commit ...   (logged to vibe-safe/bypass.log)
+root=$(git rev-parse --show-toplevel)
+scan="$root/scripts/secret-scan.sh"
+if [ ! -f "$scan" ]; then
+  echo "pre-commit: scripts/secret-scan.sh is missing; the secret guard cannot run, so this commit is refused (fail closed). Re-run the anf-skills install." >&2
+  exit 1
+fi
+if sh "$scan" --staged; then
+  exit 0
+fi
+if [ "${ANF_ALLOW_SECRET:-}" = "1" ]; then
+  mkdir -p "$root/vibe-safe"
+  printf '%s  secret-scan bypassed on commit by %s: %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$(git config user.name || echo unknown)" "${ANF_BYPASS_REASON:-no reason given}" >> "$root/vibe-safe/bypass.log"
+  git add "$root/vibe-safe/bypass.log"
+  echo "pre-commit: bypass recorded in vibe-safe/bypass.log" >&2
+  exit 0
+fi
+exit 1
