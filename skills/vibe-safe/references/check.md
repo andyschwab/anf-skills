@@ -147,6 +147,10 @@ land.
 ## Rules of the check
 
 - Cite a file and line for every *does not hold*. If you cannot, it is *could not tell*.
+- Show a gap is real with the smallest demonstration: one request without a token, one
+  missing check on one line. Never write a working exploit or a step-by-step attack into
+  the report or the conversation; the report is for the owner and may be handed to others,
+  and the fix is what they need, not the attack.
 - Never rank by a number. The order of the list is the priority.
 - Do not fix while checking. The picture first; the person sees it; then fixes, one at a
   time, each with its verify recipe.
