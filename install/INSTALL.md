@@ -8,6 +8,21 @@ Work from the root of the repository you are installing into. `$ANF` below is a 
 of `https://github.com/andyschwab/anf-skills` (clone it to a temporary folder, or read the
 files from GitHub).
 
+## 0. The choice: quick or full
+
+Ask the person one question, in these words or close to them:
+
+> Two ways to check your app. **Quick**: I read the code myself, about ten minutes, nothing
+> extra installed. **Full**: a public tool called assay measures it, runs its tests from a
+> clean copy, records exactly what was and wasn't checked, and writes you a plain-words
+> page; it needs Node installed and takes longer. You can switch later. Which one?
+
+Write the answer to `vibe-safe/MODE` as the single word `quick` or `full` (create the
+folder). For `full`, check `node --version` is 20 or later; if it is not, say what to
+install, write `quick` for now, and note that the full check is waiting on Node. The
+skill's `references/measure.md` reads this file and does the rest at check time; nothing
+else is installed for it.
+
 ## 1. The contract
 
 The agent contract is the file every AI session in this repository reads first. Find it:
@@ -92,10 +107,15 @@ git rm -q --cached vibe-safe-probe.txt && rm vibe-safe-probe.txt
 
 If the commit went through, stop and fix the hook before anything else.
 
-## 7. Commit, and say what changed
+## 7. Switching later
+
+Changing the mode is one line: write `quick` or `full` to `vibe-safe/MODE` and commit it.
+When someone with a quick install asks for "the thorough check", do step 0 again.
+
+## 8. Commit, and say what changed
 
 Commit the install as its own commit ("Install vibe-safe: contract, secret guard, CI gate,
-ship hook, skill"). Then tell the person, in plain words, one line per layer: what it does
+ship hook, skill; mode: quick|full"). Then tell the person, in plain words, one line per layer: what it does
 for them, and the one thing it will stop them doing by accident. Offer to run the check
 (`references/check.md`) next if the repository already has code in it, or to go through
 `references/start.md` if it is new.

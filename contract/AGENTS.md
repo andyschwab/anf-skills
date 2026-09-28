@@ -11,7 +11,8 @@ prevents, in plain words.
 - **Three moments, always.** The skill lives at `.claude/skills/vibe-safe/`. Before any
   deploy, publish, send, or payment setup, read its `references/ship.md` and do the ship
   check. When asked to look at, review or take over an existing codebase, read
-  `references/check.md` first. When starting a new repository, read `references/start.md`.
+  `references/check.md` first (`vibe-safe/MODE` says whether the check is quick or full).
+  When starting a new repository, read `references/start.md`.
 - **A secret never goes into a file that is committed.** Not `.env`, not a config, not a test.
   If one is pasted into the chat, say in one sentence that you will not keep it and that it
   needs replacing ("rotating"), then carry on.

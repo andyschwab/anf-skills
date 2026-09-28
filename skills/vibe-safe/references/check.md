@@ -5,6 +5,12 @@ know whether it is safe, or you are about to work on it and need to know what yo
 standing on. Draw the picture first; fix nothing until the picture is drawn and the person
 has seen it.
 
+**Quick or full?** Read `vibe-safe/MODE` if it exists. `full` means the person chose the
+measured check at install: follow `measure.md` instead of this list, then read the owner
+page it produces. `quick`, no file, or no Node on this machine means this list. Either way,
+the report rules at the end apply. If the person asks for "the thorough one" and Node is
+present, offer `measure.md`; it is one install step away (`/install/INSTALL.md` step 0).
+
 The list below is in the order things hurt, which is also the order to fix them: what
 nobody controls, then what can do damage unnoticed, then what cannot be rebuilt, then what
 is unverified, then what cannot be understood, then what cannot be operated. Work down it.

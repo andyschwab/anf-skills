@@ -22,7 +22,8 @@ for f in "$ANF"/install/hooks/secret-scan.sh "$ANF"/install/hooks/pre-commit "$A
   sh -n "$f"; check "sh -n $(basename "$f")" 0 $?
 done
 
-echo "== install (INSTALL.md steps 1-3, 5)"
+echo "== install (INSTALL.md steps 0-3, 5)"
+mkdir -p vibe-safe && printf 'quick\n' > vibe-safe/MODE
 cp "$ANF/contract/AGENTS.md" AGENTS.md; echo '@AGENTS.md' > CLAUDE.md
 mkdir -p .claude/skills scripts .githooks; cp -r "$ANF/skills/vibe-safe" .claude/skills/
 cp "$ANF/install/hooks/secret-scan.sh" scripts/; cp "$ANF/install/hooks/pre-commit" .githooks/; cp "$ANF/install/claude/ship-gate.sh" scripts/
@@ -84,9 +85,13 @@ echo "== skill and contract shape"
 head -1 "$ANF/skills/vibe-safe/SKILL.md" | grep -q '^---$'; check "SKILL.md has frontmatter" 0 $?
 grep -q '^name: vibe-safe$' "$ANF/skills/vibe-safe/SKILL.md"; check "SKILL.md name matches the directory" 0 $?
 grep -q '^description: ' "$ANF/skills/vibe-safe/SKILL.md"; check "SKILL.md has a description" 0 $?
-for r in check start ship why stacks; do if [ -f "$ANF/skills/vibe-safe/references/$r.md" ]; then rc=0; else rc=1; fi; check "references/$r.md exists" 0 $rc; done
+for r in check start ship why stacks measure; do if [ -f "$ANF/skills/vibe-safe/references/$r.md" ]; then rc=0; else rc=1; fi; check "references/$r.md exists" 0 $rc; done
 [ "$(wc -l < "$ANF/skills/vibe-safe/SKILL.md")" -lt 500 ]; check "SKILL.md under 500 lines" 0 $?
 grep -q 'anf-skills contract' "$ANF/contract/AGENTS.md"; check "contract carries its install marker" 0 $?
+grep -q 'vibe-safe/MODE' "$ANF/contract/AGENTS.md"; check "contract names the mode file" 0 $?
+grep -q 'vibe-safe/MODE' "$ANF/skills/vibe-safe/references/check.md"; check "check.md forks on the mode file" 0 $?
+grep -q 'routine/run.mjs' "$ANF/skills/vibe-safe/references/measure.md"; check "measure.md uses assay's routine driver" 0 $?
+grep -Eq '^## 0\.' "$ANF/install/INSTALL.md"; check "INSTALL.md has the choice step" 0 $?
 grep -Eq '\b(TODO|CHANGELOG|## (Status|History))\b' "$ANF/contract/AGENTS.md"; check "contract is present-tense (no todo/history)" 1 $?
 grep -q 'PIN_CHECKOUT' "$ANF/install/ci/gate.yml"; check "gate template keeps its pin placeholders" 0 $?
 

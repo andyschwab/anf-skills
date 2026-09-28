@@ -18,7 +18,17 @@ matter.
 > one line each, and offer to run the check on my code.
 
 That is the whole install. It takes the AI a few minutes and it does not change your
-application's code.
+application's code. It asks you one question on the way: **quick or full**.
+
+| | Quick | Full |
+|---|---|---|
+| What checks your app | your AI reads the code against the list | [assay](https://github.com/andyschwab/assay), a public engine, measures it: runs the install and tests from a clean copy, audits dependencies, scans for secrets, records what ran and what did not, then your AI does the reading in the engine's format |
+| What you get | a report in your repo, plain words, file and line | the same, computed from the measurement, plus a record of what nobody checked |
+| Needs | nothing extra | Node 20 or later |
+| Takes | about ten minutes | a few minutes for the measured part, an hour or more for the reading |
+
+You can switch at any time; it is one line in a file. When the app holds other people's
+data or takes payments, choose full.
 
 ## What gets installed
 

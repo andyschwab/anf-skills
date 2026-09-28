@@ -19,11 +19,18 @@ Decide which moment you are in, then read that reference. Read only the one you 
 | **Start** | a new repository, or one with no safeguards yet, before the first feature | `references/start.md` |
 | **Ship** | anything about to go outward: deploy, publish, go live, send to real users, connect payments, add a paid account or card | `references/ship.md` |
 
+The check has two modes, chosen at install and recorded in `vibe-safe/MODE`: **quick**
+(you read the code against the list in `check.md`) and **full** (assay, a public engine,
+measures the repository and writes an owner page; `references/measure.md` is the
+procedure). Either can be added later.
+
 Two more files, read when they help:
 
 - `references/why.md`: what each risk means for a person's app, in plain words, and the
   handful of habits that prevent them. Read it to explain **why** you stopped, or when the
   person asks to understand rather than to act.
+- `references/measure.md`: the full check with assay. Read it when `vibe-safe/MODE` says
+  `full`, or when the person asks for the thorough version and Node is present.
 - `references/stacks.md`: where the same things live on the stacks people usually build on
   (Next.js with Supabase and Vercel, Express, FastAPI, Firebase). Read the section for the
   stack in front of you.
