@@ -44,7 +44,7 @@ for f in $files; do
     status=1
     continue
   fi
-  case "$f" in *.png|*.jpg|*.jpeg|*.gif|*.pdf|*.zip|*.woff|*.woff2|*.lock|package-lock.json|yarn.lock|pnpm-lock.yaml) continue ;; esac
+  case "$f" in *.png|*.jpg|*.jpeg|*.gif|*.pdf|*.zip|*.woff|*.woff2|*.lock|package-lock.json|pnpm-lock.yaml) continue ;; esac
   hits=$(content "$f" 2>/dev/null | grep -nP "$secret_values" | grep -v 'secret-scan:allow' | cut -c1-40)
   if [ -n "$hits" ]; then
     echo "secret-scan: $f holds something shaped like a key (line shown, value cut):" >&2
